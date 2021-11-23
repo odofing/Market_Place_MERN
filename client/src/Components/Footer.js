@@ -12,6 +12,6 @@ const Footer = () => {
     </footer>
   )
 }
-// hello world
+
 
 export default Footer

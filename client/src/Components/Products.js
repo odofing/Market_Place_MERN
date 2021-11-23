@@ -15,9 +15,6 @@ const Products = () => {
     dispatch(listProducts())
   }, [dispatch])
 
-
-
-
   return (
     <>
       <Container>

@@ -12,18 +12,30 @@ connectDB()
 
 const app = express()
 
+app.use('/api/users', userRoute)
+app.use('/api/products', productRoute)
+app.use('/api/upload', uploadRoute)
+
 app.use(express.json())
 if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev'))
+  app.use(morgan('dev'))
 }
 
 // create a static folder for images
 const __dirname = path.resolve()
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 
-app.use('/api/users', userRoute)
-app.use('/api/products', productRoute)
-app.use('/api/upload', uploadRoute)
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, './client/build')))
+
+  app.get('*', (req, res) =>
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
+  )
+} else {
+  app.get('/', (req, res) => {
+    res.send('API is running...')
+  })
+}
 
 const PORT = process.env.PORT || 6000
 
