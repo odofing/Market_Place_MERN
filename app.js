@@ -12,14 +12,13 @@ connectDB()
 
 const app = express()
 
-app.use('/api/users', userRoute)
-app.use('/api/products', productRoute)
-app.use('/api/upload', uploadRoute)
-
 app.use(express.json())
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
+app.use('/api/users', userRoute)
+app.use('/api/products', productRoute)
+app.use('/api/upload', uploadRoute)
 
 // create a static folder for images
 const __dirname = path.resolve()
