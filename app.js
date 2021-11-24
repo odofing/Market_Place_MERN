@@ -16,9 +16,6 @@ app.use(express.json())
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
-app.use('/api/users', userRoute)
-app.use('/api/products', productRoute)
-app.use('/api/upload', uploadRoute)
 
 // create a static folder for images
 const __dirname = path.resolve()
@@ -35,6 +32,10 @@ if (process.env.NODE_ENV === 'production') {
     res.send('API is running...')
   })
 }
+
+app.use('/api/users', userRoute)
+app.use('/api/products', productRoute)
+app.use('/api/upload', uploadRoute)
 
 const PORT = process.env.PORT || 6000
 
