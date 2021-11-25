@@ -35,8 +35,6 @@ import {
 } from '../constants'
 import axios from 'axios'
 
-const url = 'https://themarketplaceapp.herokuapp.com/'
-
 export const productCreate =
   (productName, image, brand, category, description, price, countInStock) =>
   async (dispatch, getState) => {
@@ -53,7 +51,7 @@ export const productCreate =
         },
       }
       const { data } = await axios.post(
-        `${url}/api/products`,
+        `https://themarketplaceapp.herokuapp.com/api/products`,
         {
           productName,
           image,
@@ -85,7 +83,9 @@ export const listProducts = () => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST })
 
-    const { data } = await axios.get(`${url}/api/products`)
+    const { data } = await axios.get(
+      `https://themarketplaceapp.herokuapp.com/api/products`
+    )
 
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data })
   } catch (error) {
@@ -103,7 +103,9 @@ export const singleProduct = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: SINGLE_PRODUCT_REQUEST })
 
-    const { data } = await axios.get(`${url}/api/products/${id}`)
+    const { data } = await axios.get(
+      `https://themarketplaceapp.herokuapp.com/api/products/${id}`
+    )
 
     dispatch({ type: SINGLE_PRODUCT_SUCCESS, payload: data })
   } catch (error) {
@@ -132,7 +134,7 @@ export const updateProduct = (id, product) => async (dispatch, getState) => {
       },
     }
     const { data } = await axios.put(
-      `${url}/api/products/edit/${id}`,
+      `https://themarketplaceapp.herokuapp.com/api/products/edit/${id}`,
       product,
       config
     )
@@ -166,7 +168,11 @@ export const deleteProduct = (path, userId) => async (dispatch, getState) => {
       },
     }
 
-    await axios.delete(`${url}/api/products/delete/${path}`, userId, config)
+    await axios.delete(
+      `https://themarketplaceapp.herokuapp.com/api/products/delete/${path}`,
+      userId,
+      config
+    )
 
     dispatch({
       type: PRODUCT_DELETE_SUCCESS,
@@ -198,7 +204,7 @@ export const createProductReview =
         },
       }
       await axios.post(
-        `${url}/api/products/${productId}/reviews`,
+        `https://themarketplaceapp.herokuapp.com/api/products/${productId}/reviews`,
         review,
         config
       )
@@ -231,7 +237,10 @@ export const getMyProducts = () => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(`${url}/api/products/myproducts`, config)
+    const { data } = await axios.get(
+      `https://themarketplaceapp.herokuapp.com/api/products/myproducts`,
+      config
+    )
 
     dispatch({
       type: MY_PRODUCTS_SUCCESS,
@@ -262,7 +271,10 @@ export const listProductsByAdmin = () => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(`${url}/api/products/admin`, config)
+    const { data } = await axios.get(
+      `https://themarketplaceapp.herokuapp.com/api/products/admin`,
+      config
+    )
 
     dispatch({ type: ADMIN_GET_ALL_PRODUCTS_SUCCESS, payload: data })
   } catch (error) {
@@ -289,7 +301,11 @@ export const createProductByAdmin = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     }
-    const { data } = await axios.post(`${url}/api/products/admin`, {}, config)
+    const { data } = await axios.post(
+      `https://themarketplaceapp.herokuapp.com/api/products/admin`,
+      {},
+      config
+    )
 
     dispatch({
       type: ADMIN_CREATE_PRODUCT_SUCCESS,
@@ -322,7 +338,7 @@ export const updateProductbyAdmin =
         },
       }
       const { data } = await axios.put(
-        `${url}/api/products/admin/${id}`,
+        `https://themarketplaceapp.herokuapp.com/api/products/admin/${id}`,
         product,
         config
       )
@@ -355,7 +371,10 @@ export const deleteProductByAdmin = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     }
-    await axios.delete(`${url}/api/products/delete/admin/${id}`, config)
+    await axios.delete(
+      `https://themarketplaceapp.herokuapp.com/api/products/delete/admin/${id}`,
+      config
+    )
 
     dispatch({
       type: ADMIN_DELETE_PRODUCT_SUCCESS,

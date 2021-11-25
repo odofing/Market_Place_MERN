@@ -42,7 +42,7 @@ import {
 } from '../constants'
 import axios from 'axios'
 
-const url = 'https://themarketplaceapp.herokuapp.com/'
+const url = 'https://themarketplaceapp.herokuapp.com'
 
 export const register = (name, email, password) => async (dispatch) => {
   try {
@@ -54,7 +54,7 @@ export const register = (name, email, password) => async (dispatch) => {
       },
     }
     const { data } = await axios.post(
-      `${url}/api/users/register`,
+      `https://themarketplaceapp.herokuapp.com/api/users/register`,
       { name, email, password },
       config
     )
@@ -75,7 +75,10 @@ export const activateAccount = (token) => async (dispatch) => {
   try {
     dispatch({ type: USER_ACTIVATION_REQUEST })
 
-    const { data } = await axios.post(`${url}/api/users/activate`, { token })
+    const { data } = await axios.post(
+      `https://themarketplaceapp.herokuapp.com/api/users/activate`,
+      { token }
+    )
 
     dispatch({ type: USER_ACTIVATION_SUCCESS, payload: data.success })
   } catch (error) {
@@ -100,7 +103,7 @@ export const login = (email, password) => async (dispatch) => {
     }
 
     const { data } = await axios.post(
-      `${url}/api/users/login`,
+      `https://themarketplaceapp.herokuapp.com/api/users/login`,
       { email, password },
       config
     )
@@ -128,9 +131,12 @@ export const forgotPassword = (email) => async (dispatch) => {
   try {
     dispatch({ type: USER_FORGOT_PASSWORD_REQUEST })
 
-    const { data } = await axios.post(`${url}/api/users/forgotpassword`, {
-      email,
-    })
+    const { data } = await axios.post(
+      `https://themarketplaceapp.herokuapp.com/api/users/forgotpassword`,
+      {
+        email,
+      }
+    )
 
     dispatch({ type: USER_FORGOT_PASSWORD_SUCCESS, payload: data.success })
   } catch (error) {
@@ -149,7 +155,7 @@ export const resetPassword = (id, token, password) => async (dispatch) => {
     dispatch({ type: USER_RESET_PASSWORD_REQUEST })
 
     const { data } = await axios.put(
-      `${url}/api/users/resetpassword/${id}/${token}`,
+      `https://themarketplaceapp.herokuapp.com/api/users/resetpassword/${id}/${token}`,
       { id, token, password }
     )
 
@@ -180,7 +186,11 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.put(`${url}/api/users/profile`, user, config)
+    const { data } = await axios.put(
+      `https://themarketplaceapp.herokuapp.com/api/users/profile`,
+      user,
+      config
+    )
 
     dispatch({ type: USER_UPDATE_PROFILE_SUCCESS, payload: data })
 
@@ -213,7 +223,10 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(`${url}/api/users/${id}`, config)
+    const { data } = await axios.get(
+      `https://themarketplaceapp.herokuapp.com/api/users/${id}`,
+      config
+    )
 
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data })
   } catch (error) {
@@ -243,7 +256,7 @@ export const addToWishlists = (id, productId) => async (dispatch, getState) => {
     }
 
     const { data } = await axios.post(
-      `${url}/api/users/${id}/add-wishlist`,
+      `https://themarketplaceapp.herokuapp.com/api/users/${id}/add-wishlist`,
       productId,
       config
     )
@@ -276,7 +289,7 @@ export const createUserByAdmin =
         },
       }
       const { data } = await axios.post(
-        `${url}/api/users/admin`,
+        `https://themarketplaceapp.herokuapp.com/api/users/admin`,
         { name, email, password, isAdmin },
         config
       )
@@ -307,7 +320,10 @@ export const listUsers = () => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(`${url}/api/users`, config)
+    const { data } = await axios.get(
+      `https://themarketplaceapp.herokuapp.com/api/users`,
+      config
+    )
 
     dispatch({ type: USER_LIST_SUCCESS, payload: data })
   } catch (error) {
@@ -336,7 +352,10 @@ export const getAdminUsersDetails = (id) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(`${url}/api/users/admin/${id}`, config)
+    const { data } = await axios.get(
+      `https://themarketplaceapp.herokuapp.com/api/users/admin/${id}`,
+      config
+    )
 
     dispatch({ type: ALL_USERS_DETAILS_SUCCESS, payload: data })
   } catch (error) {
@@ -365,7 +384,11 @@ export const updateUserByAdmin = (id, user) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.put(`${url}/api/users/admin/${id}`, user, config)
+    const { data } = await axios.put(
+      `https://themarketplaceapp.herokuapp.com/api/users/admin/${id}`,
+      user,
+      config
+    )
 
     dispatch({ type: ADMIN_UPDATE_USER_SUCCESS })
 
@@ -394,7 +417,10 @@ export const userDeleteAccount = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     }
-    await axios.delete(`${url}/api/users/delete/${id}`, config)
+    await axios.delete(
+      `https://themarketplaceapp.herokuapp.com/api/users/delete/${id}`,
+      config
+    )
 
     dispatch({
       type: USER_DELETE_ACCOUNT_SUCCESS,
@@ -422,7 +448,11 @@ export const adminDeleteAccount = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     }
-    await axios.delete(`${url}/api/users/admin/delete`, { id }, config)
+    await axios.delete(
+      `https://themarketplaceapp.herokuapp.com/api/users/admin/delete`,
+      { id },
+      config
+    )
 
     dispatch({
       type: USER_DELETE_ACCOUNT_SUCCESS,
