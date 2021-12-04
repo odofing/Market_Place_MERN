@@ -13,6 +13,7 @@ import {
   deleteProduct,
   createProductReview,
   getMyProducts,
+  makePyament
 } from '../Controllers/productControllers.js'
 
 import { protect, admin } from '../middleware/index.js'
@@ -20,6 +21,8 @@ import { protect, admin } from '../middleware/index.js'
 router.get('/', getAllProducts)
 
 router.post('/', protect, createProduct)
+
+router.post('/pay', protect, makePyament)
 
 router.post('/admin', protect, admin, createProductByAdmin)
 

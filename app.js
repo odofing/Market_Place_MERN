@@ -12,10 +12,12 @@ connectDB()
 
 const app = express()
 
-app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
-app.use(express.json())
+app.use('/api/users', userRoute)
+app.use('/api/products', productRoute)
+app.use('/api/upload', uploadRoute)
+
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
@@ -26,6 +28,7 @@ app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, './client/build')))
+  app.use(express.urlencoded({ extended: false }))
 
   app.get('*', (req, res) =>
     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
@@ -35,10 +38,6 @@ if (process.env.NODE_ENV === 'production') {
     res.send('API is running...')
   })
 }
-
-app.use('/api/users', userRoute)
-app.use('/api/products', productRoute)
-app.use('/api/upload', uploadRoute)
 
 const PORT = process.env.PORT || 6000
 

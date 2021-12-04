@@ -138,6 +138,11 @@ const ProductScreen = () => {
                         {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
                         <strong> ({product.countInStock}) </strong>
                       </Col>
+                      <LinkContainer to={`/product/payment/${product._id}`}>
+                        <Button className='btn-block mt-3' variant='dark'>
+                          Make Payment
+                        </Button>
+                      </LinkContainer>
                       {userInfo && (
                         <>
                           <LinkContainer to={`/product/edit/${product._id}`}>
