@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler'
 import Product from '../Models/productModel.js'
 import Stripe from 'stripe'
+import { token } from 'morgan'
 const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY)
 
 // CREATE A PRODUCT
@@ -274,44 +275,7 @@ const makePyament = asyncHandler(async (req, res) => {
   const { productId } = req.body
 
   const product = await Product.findOne({ productId })
-
-  if (product) {
-    const session = await stripe.checkout.sessions.create({
-      line_items: [
-        {
-          //     currency: 'usd',
-          price: product.price.toString(),
-          quantity: 1,
-        },
-      ],
-      success_url: `${process.env.CLIENT_URL}/success.html`,
-      cancel_url: `${process.env.CLIENT_URL}/cancel.html`,
-      mode: 'payment',
-    })
-
-    // redirect session.url, 303
-
-    // const session = await stripe.checkout.sessions.create({
-    //   payment_method_types: ['card'],
-    //   mode: 'payment',
-    //   customerId: product._id,
-    //   price_data: {
-    //     currency: 'usd',
-    //     product_data: {
-    //       productName: product.productName,
-    //     },
-    //     unit_amount: product.price * 100,
-    //   },
-    //   quantity: 1,
-
-    // })
-
-    return res.status(201).json(session)
-  } else {
-    return res
-      .status(400)
-      .json({ message: 'payment could not be made, try again' })
-  }
+  console.log(product)
 })
 
 export {
