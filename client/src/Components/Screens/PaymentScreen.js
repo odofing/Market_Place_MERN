@@ -1,24 +1,45 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Loader from '../Loader'
-import { Button, Container } from 'react-bootstrap'
-import { ToastContainer, toast } from 'react-toastify'
+import StripeCheckout from 'react-stripe-checkout'
+import { Container } from 'react-bootstrap'
+
 import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
-import { LinkContainer } from 'react-router-bootstrap'
+
 import { useDispatch, useSelector } from 'react-redux'
 import { singleProduct } from '../../actions/productActions.js'
 
 const PaymentScreen = () => {
+  const productSingle = useSelector((state) => state.productSingle)
+  const { loading, error, product } = productSingle
+  console.log(product)
+
+  const [payProduct, setPayProduct] = useState({
+    name: product.productName,
+    price: product.price,
+    brand: product.brand,
+  })
+
+  const makePayment = (token) => {
+    const body = {
+      token,
+      payProduct,
+    }
+    const headers = {
+      'Content-Type': 'application/json',
+    }
+
+    const { data } = axios.post(`/api/products/pay`, {
+      headers,
+      body: JSON.stringify(body),
+    })
+    console.log(data)
+  }
   const location = useLocation()
   const path = location.pathname.split('/')[3]
 
   const dispatch = useDispatch()
-
-  const productSingle = useSelector((state) => state.productSingle)
-
-  const { loading, error, product } = productSingle
-  console.log(product)
 
   useEffect(() => {
     if (path) {
@@ -47,13 +68,20 @@ const PaymentScreen = () => {
           <h5>Product ID: {product._id}</h5>
           <h5>Product Name:{product.productName}</h5>
           <h5> ₦: {product.price}</h5>
-          <Button
+          {/* <Button
             className='btn mt-3'
             variant='dark'
             onClick={() => paymentHandler(path)}
           >
             PAY
-          </Button>
+          </Button> */}
+          <StripeCheckout
+            stripeKey={process.env.REACT_APP_STRIPE_KEY}
+            token='token'
+            image={product.image}
+            name={product.productName}
+            amount={product.price * 100}
+          />
         </>
       )}
     </Container>
