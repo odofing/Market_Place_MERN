@@ -2,8 +2,8 @@ import express from 'express'
 import path from 'path'
 import dotenv from 'dotenv'
 import morgan from 'morgan'
-import cors from 'cors'
-import bodyParser from 'body-parser'
+// import cors from 'cors'
+// import bodyParser from 'body-parser'
 import connectDB from './config/db.js'
 import userRoute from './Routes/userRoute.js'
 import productRoute from './Routes/productRoute.js'
@@ -13,17 +13,8 @@ dotenv.config()
 connectDB()
 
 const app = express()
-app.use(bodyParser.json())
 app.use(express.json())
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(express.urlencoded({ extended: true }))
-
-app.use(
-  cors({
-    origin: new URL('https://themarketplaceapp.herokuapp.com'),
-    credentials: true,
-  })
-)
+app.use(express.urlencoded({ extended: false }))
 
 app.use('/api/users', userRoute)
 app.use('/api/products', productRoute)
@@ -39,7 +30,6 @@ app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, './client/build')))
-  app.use(express.urlencoded({ extended: false }))
 
   app.get('*', (req, res) =>
     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
