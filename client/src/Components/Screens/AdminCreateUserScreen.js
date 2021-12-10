@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ToastContainer, toast } from 'react-toastify'
 import { Link } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
-import { createBrowserHistory } from 'history'
+import { useHistory } from 'react-router-dom'
 import Loader from '../Loader'
 import { createUserByAdmin } from '../../actions/userActions'
 
@@ -15,12 +15,13 @@ const AdminCreateUserScreen = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [isAdmin, setIsAdmin] = useState(false)
 
-  let history = createBrowserHistory()
+  const history = useHistory()
   const dispatch = useDispatch()
 
   const userCreate = useSelector((state) => state.userCreate)
 
   const { loading, error, message } = userCreate
+  console.log(message)
 
   useEffect(() => {
     if (message) {
@@ -29,6 +30,7 @@ const AdminCreateUserScreen = () => {
       setPassword('')
       setConfirmPassword('')
       setIsAdmin(false)
+      toast.success(message)
       history.push('/admin/users')
     }
   }, [message, history])
@@ -42,7 +44,6 @@ const AdminCreateUserScreen = () => {
       } else {
         dispatch(createUserByAdmin(name, email, password))
         toast.error(error)
-        toast.success(message)
       }
     } else {
       toast.error('Please fill all fields')
@@ -99,7 +100,7 @@ const AdminCreateUserScreen = () => {
                 <Form.Check
                   type='checkbox'
                   label='Is Admin'
-                  checked={isAdmin}
+                  //  checked={isAdmin}
                   onChange={(e) => setIsAdmin(e.target.checked)}
                 ></Form.Check>
               </Form.Group>

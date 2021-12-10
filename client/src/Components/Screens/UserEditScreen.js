@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { createBrowserHistory } from 'history'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 import Loader from '../Loader'
 import {
   getAdminUsersDetails,
@@ -17,7 +16,7 @@ const UserEditScreen = () => {
   const [email, setEmail] = useState('')
   const [isAdmin, setIsAdmin] = useState(false)
 
-  let history = createBrowserHistory()
+  const history = useHistory()
   const location = useLocation()
   const path = location.pathname.split('/')[3]
 
@@ -35,30 +34,19 @@ const UserEditScreen = () => {
   } = adminUpdateUser
 
   useEffect(() => {
-    if (successUpdate) {
-      toast.success(successUpdate)
-      dispatch({ type: ADMIN_UPDATE_USER_RESET })
-      history.push('/admin/users')
-    }
-
-    if (!user.name || user._id !== path) {
+    if (user._id !== path) {
       dispatch(getAdminUsersDetails(path))
     } else {
       setName(user.name)
       setEmail(user.email)
       setIsAdmin(user.isAdmin)
     }
-  }, [
-    path,
-    user,
-    dispatch,
-    user.name,
-    user.email,
-    user.isAdmin,
-    errorUpdate,
-    successUpdate,
-    history,
-  ])
+    if (successUpdate) {
+      toast.success(successUpdate)
+      dispatch({ type: ADMIN_UPDATE_USER_RESET })
+      history.push('/admin/users')
+    }
+  }, [path, user, dispatch, errorUpdate, successUpdate, history])
 
   const submitHandler = (e) => {
     e.preventDefault()

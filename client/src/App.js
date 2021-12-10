@@ -13,7 +13,6 @@ import AddProductScreen from './Components/Screens/AddProductScreen'
 import ForgotPasswordScreen from './Components/Screens/ForgotPasswordScreen'
 import ResetPasswordScreen from './Components/Screens/ResetPasswordScreen'
 import ProductScreen from './Components/Screens/ProductScreen'
-import ContactScreen from './Components/Screens/ContactScreen'
 import ProductEditScreen from './Components/Screens/ProductEditScreen'
 import AllUsersScreen from './Components/Screens/AllUsersScreen'
 import AllProductsScreen from './Components/Screens/AllProductsScreen'
@@ -50,10 +49,6 @@ const App = () => {
             <Route path='/forgotpassword'>
               {' '}
               <ForgotPasswordScreen />{' '}
-            </Route>
-            <Route path='/contact'>
-              {' '}
-              <ContactScreen />{' '}
             </Route>
             <Route path='/resetpassword/:id/:token'>
               {' '}

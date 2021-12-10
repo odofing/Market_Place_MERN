@@ -20,13 +20,6 @@ const Products = () => {
       <Container>
         {loading ? (
           <Loader />
-        ) : products.length === 0 ? (
-          <>
-            <h5 className='mt-5'>no products in the Database</h5>
-            <Link className='btn btn-dark my-3' to={'/add-product'}>
-              Add A Product{' '}
-            </Link>
-          </>
         ) : error ? (
           <h5 className='mt-5'>products could not be loaded</h5>
         ) : (
