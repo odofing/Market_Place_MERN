@@ -260,7 +260,7 @@ const resetPassword = asyncHandler(async (req, res) => {
     user.save()
     return res.status(201).json({ message: 'password reset was succcesful' })
   } catch (error) {
-    return res.status(401).json({ message: 'error reseting password' })
+    return res.status(401).json({ message: 'reset password link already used' })
   }
 })
 

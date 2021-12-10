@@ -44,14 +44,9 @@ const ProductScreen = () => {
   useEffect(() => {
     dispatch(getUserDetails(product.user))
     dispatch(singleProduct(path))
-
-    if (deleteError) {
-      toast.error(deleteError)
-    }
   }, [
     path,
     dispatch,
-    deleteError,
     product.user,
     user,
     successProductReview,
@@ -61,6 +56,9 @@ const ProductScreen = () => {
   const deleteHandler = (path) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       dispatch(deleteProduct(path, { userId: userInfo._id }))
+    }
+    if (deleteError) {
+      toast.error(deleteError)
     }
   }
 

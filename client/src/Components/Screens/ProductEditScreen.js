@@ -39,9 +39,17 @@ const ProductEditScreen = () => {
   const { Loading, error, success } = productUpdate
 
   useEffect(() => {
-    if (path) {
+    if (success) {
+      dispatch({ type: PRODUCT_UPDATE_RESET })
+      toast.success('update was successful')
+      window.location.replace('/')
+    }
+    if (error) {
+      toast.error(error)
+    }
+    if (product._id !== path) {
       dispatch(singleProduct(path))
-
+    } else {
       setName(product.productName)
       setPrice(product.price)
       setImage(product.image)
@@ -49,31 +57,8 @@ const ProductEditScreen = () => {
       setCategory(product.category)
       setCountInStock(product.countInStock)
       setDescription(product.description)
-
-      if (success) {
-        dispatch({ type: PRODUCT_UPDATE_RESET })
-        toast.success('update was successful')
-        window.location.replace('/')
-      }
-      if (error) {
-        toast.error(error)
-      } else {
-      }
     }
-  }, [
-    path,
-    product,
-    dispatch,
-    error,
-    success,
-    // product.name,
-    // product.price,
-    // product.image,
-    // product.brand,
-    // product.category,
-    // product.countInStock,
-    // product.description,
-  ])
+  }, [path, product, dispatch, error, success])
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0]
@@ -87,11 +72,7 @@ const ProductEditScreen = () => {
           'Content-Type': 'multipart/form-data',
         },
       }
-      const { data } = await axios.post(
-        'https://themarketplacebyodofing.herokuapp.com/api/upload',
-        formData,
-        config
-      )
+      const { data } = await axios.post('/api/upload', formData, config)
       setImage(data)
       setUploading(false)
     } catch (error) {

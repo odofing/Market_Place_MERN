@@ -90,11 +90,6 @@ const Header = () => {
                     </LinkContainer>
                   </NavDropdown>
                 )}
-                <LinkContainer to='/contact'>
-                  <Nav.Link>
-                    <i className='fas fa-user'></i> contact
-                  </Nav.Link>
-                </LinkContainer>
               </Nav>
             </Navbar.Collapse>
           </Container>
