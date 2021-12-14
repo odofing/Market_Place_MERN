@@ -1,8 +1,5 @@
 import asyncHandler from 'express-async-handler'
 import Product from '../Models/productModel.js'
-import Stripe from 'stripe'
-import { token } from 'morgan'
-const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY)
 
 // CREATE A PRODUCT
 // POST REQUEST /api/products
@@ -267,17 +264,6 @@ const createProductReview = asyncHandler(async (req, res) => {
   }
 })
 
-// make payment with stripe
-// POST REQUEST /api/products/pay
-// private
-
-const makePyament = asyncHandler(async (req, res) => {
-  const { productId } = req.body
-
-  const product = await Product.findOne({ productId })
-  console.log(product)
-})
-
 export {
   createProduct,
   getProductsbyAdmin,
@@ -290,5 +276,4 @@ export {
   updateProduct,
   deleteProduct,
   createProductReview,
-  makePyament,
 }

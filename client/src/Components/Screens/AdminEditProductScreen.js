@@ -3,8 +3,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import axios from 'axios'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { createBrowserHistory } from 'history'
-import { useLocation, Link } from 'react-router-dom'
+import { useLocation, useHistory, Link } from 'react-router-dom'
 import Loader from '../Loader'
 import {
   singleProduct,
@@ -22,7 +21,7 @@ const AdminEditProductScreen = () => {
   const [description, setDescription] = useState('')
   const [uploading, setUploading] = useState(false)
 
-  let history = createBrowserHistory()
+  const history = useHistory()
   const location = useLocation()
   const path = location.pathname.split('/')[3]
 
@@ -42,8 +41,9 @@ const AdminEditProductScreen = () => {
   } = productUpdateByAdmin
 
   useEffect(() => {
-    if (path) {
+    if (product._id !== path) {
       dispatch(singleProduct(path))
+    } else {
       setProductName(product.productName)
       setPrice(product.price)
       setImage(product.image)
@@ -61,13 +61,14 @@ const AdminEditProductScreen = () => {
       toast.error('product could not be updated')
     }
   }, [
-    product.productName,
-    product.brand,
-    product.price,
-    product.image,
-    product.category,
-    product.description,
-    product.countInStock,
+    // product.productName,
+    // product.brand,
+    // product.price,
+    // product.image,
+    // product.category,
+    // product.description,
+    // product.countInStock,
+    product,
     path,
     dispatch,
     history,

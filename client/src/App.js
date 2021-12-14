@@ -19,7 +19,6 @@ import AllProductsScreen from './Components/Screens/AllProductsScreen'
 import UserEditScreen from './Components/Screens/UserEditScreen'
 import AdminCreateUserScreen from './Components/Screens/AdminCreateUserScreen'
 import AdminEditProductScreen from './Components/Screens/AdminEditProductScreen'
-import PaymentScreen from './Components/Screens/PaymentScreen'
 import { useSelector } from 'react-redux'
 
 const App = () => {
@@ -65,9 +64,6 @@ const App = () => {
             <Route path='/product/edit/:id'>
               {' '}
               <ProductEditScreen />{' '}
-            </Route>
-            <Route path='/product/payment/:id'>
-              {userInfo ? <PaymentScreen /> : <LoginScreen />}
             </Route>
 
             <Route path='/add-product'>

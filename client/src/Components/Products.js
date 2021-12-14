@@ -28,21 +28,16 @@ const Products = () => {
               <Col md={4} lg={3} key={index} className='m-auto'>
                 <Card className='my-3 p-3 rounded bg-dark'>
                   <Link to={`/products/${product._id}`}>
-                    <Card.Img src={product.image} variant='top' />
-
                     <Card.Body className='text-white'>
                       <Card.Title as='div'>
                         <strong>{product.productName}</strong>
                       </Card.Title>
-
+                      <Card.Img src={product.image} variant='top' />
                       <Card.Text className='text-white' as='div'>
                         {' '}
                         {product.brand}{' '}
                       </Card.Text>
-                      <Card.Text className='text-white' as='h6'>
-                        {' '}
-                        N{product.price}
-                      </Card.Text>
+
                       <Card.Text as='div'>
                         <Ratings
                           value={product.rating}
