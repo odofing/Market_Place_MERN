@@ -37,7 +37,6 @@ const Products = () => {
                         {' '}
                         {product.brand}{' '}
                       </Card.Text>
-
                       <Card.Text as='div'>
                         <Ratings
                           value={product.rating}
