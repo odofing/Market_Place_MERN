@@ -32,7 +32,7 @@ const ProductScreen = () => {
   const productSingle = useSelector((state) => state.productSingle)
 
   const { loading, error, product } = productSingle
-  console.log(product)
+
   const productDelete = useSelector((state) => state.productDelete)
   const { error: deleteError } = productDelete
 
